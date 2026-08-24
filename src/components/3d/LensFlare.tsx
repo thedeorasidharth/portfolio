@@ -11,7 +11,6 @@ interface LensFlareProps {
 }
 
 export default function LensFlare({ tier }: LensFlareProps) {
-  const flareRef = useRef<THREE.Group>(null!);
   const { camera } = useThree();
 
   // Removed: useState(isMobile) + window.addEventListener("resize", ...)

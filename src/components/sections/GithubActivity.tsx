@@ -63,9 +63,10 @@ export default function GithubActivity() {
             // LocalStorage write fail
           }
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         if (isMounted) {
-          setError(err.message || "Failed to load GitHub activity data");
+          const message = err instanceof Error ? err.message : "Failed to load GitHub activity data";
+          setError(message);
           setLoading(false);
         }
       }

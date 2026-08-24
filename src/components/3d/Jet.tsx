@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability */
 "use client";
 
 import { Clone, useGLTF } from "@react-three/drei";

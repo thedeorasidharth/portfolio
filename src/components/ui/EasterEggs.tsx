@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bot, Terminal as TerminalIcon, X } from "lucide-react";
 
+const KONAMI_CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+
 export default function EasterEggs() {
   const [konami, setKonami] = useState(false);
   const [showAI, setShowAI] = useState(false);
   const [sequence, setSequence] = useState<string[]>([]);
-  
-  const konamiCode = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -17,7 +17,7 @@ export default function EasterEggs() {
       const newSequence = [...sequence, e.key].slice(-10);
       setSequence(newSequence);
       
-      if (newSequence.join(",") === konamiCode.join(",")) {
+      if (newSequence.join(",") === KONAMI_CODE.join(",")) {
         setKonami(true);
         window.dispatchEvent(new CustomEvent("mission-mode", { detail: true }));
         console.log("%c>>> MISSION_MODE_ACTIVATED <<<", "color: #ef4444; font-size: 20px; font-weight: bold; text-shadow: 0 0 10px #ef4444;");

@@ -76,7 +76,7 @@ export default function Hero() {
             className="
               max-w-full
               text-center
-              text-[clamp(2.35rem,10.5vw,9rem)]
+              text-[clamp(2rem,8.5vw,9rem)]
               font-black
               uppercase
               italic
@@ -87,7 +87,7 @@ export default function Hero() {
               whitespace-nowrap
             "
           >
-            SIDHARTH
+            SIDHARTH DEORA
           </h1>
         </motion.div>
 

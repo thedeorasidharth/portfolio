@@ -38,7 +38,7 @@ export default function About() {
 
         <div className="space-y-6 relative z-10">
           <p className="text-lg md:text-xl leading-relaxed text-slate-100 font-light tracking-wide max-w-3xl">
-            I build high-performance full stack applications with a focus on scalability, real-time interaction, and modern UI/UX.
+            I&apos;m <strong className="font-semibold text-white">Sidharth Deora</strong>, a Full Stack Engineer and Web Developer dedicated to building high-performance web applications with a focus on scalability, real-time interaction, and modern UI/UX.
             Passionate about crafting immersive digital experiences that combine robust engineering with creative 3D interfaces.
           </p>
 

@@ -9,7 +9,7 @@ export default function BackgroundAudio() {
   const [isScrolling, setIsScrolling] = useState(false);
 
   const audioRef         = useRef<HTMLAudioElement | null>(null);
-  const lastScrollTime   = useRef(Date.now());
+  const lastScrollTime   = useRef(0);
   // Ref shadow of isMuted so the scroll/idle handlers can read the current
   // value without being re-created every time isMuted changes.
   const isMutedRef       = useRef(true);

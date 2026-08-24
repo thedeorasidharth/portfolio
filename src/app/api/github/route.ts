@@ -38,7 +38,7 @@ export async function GET() {
     if (reposRes.ok) {
       const reposData = await reposRes.json();
       if (Array.isArray(reposData)) {
-        stars = reposData.reduce((acc: number, repo: any) => acc + (repo.stargazers_count ?? 0), 0);
+        stars = reposData.reduce((acc: number, repo: { stargazers_count?: number }) => acc + (repo.stargazers_count ?? 0), 0);
       }
     }
 

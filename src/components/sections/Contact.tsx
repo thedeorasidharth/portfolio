@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageSquare, Send, Link as LinkIcon, Camera, Mail } from "lucide-react";
+import { MessageSquare, Send, Link as LinkIcon, Camera } from "lucide-react";
 
 export default function Contact() {
   const whatsappUrl = "https://wa.me/919001890408?text=Hi%20Sidharth%2C%20I%20want%20to%20connect%20regarding%20your%20portfolio";
@@ -56,6 +56,7 @@ export default function Contact() {
           <div className="flex flex-col gap-3 max-w-md mx-auto pt-2">
             <a
               href="mailto:deorasidharth1@gmail.com"
+              aria-label="Send email to Sidharth Deora"
               className="w-full py-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-[0.2em] text-xs transition-all shadow-[0_0_20px_rgba(56,189,248,0.3)] hover:shadow-[0_0_30px_rgba(56,189,248,0.5)] flex items-center justify-center gap-2 group cursor-pointer"
             >
               <Send size={16} className="group-hover:translate-x-0.5 transition-transform" />
@@ -67,6 +68,7 @@ export default function Contact() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Contact Sidharth Deora on WhatsApp"
                 className="py-3 px-4 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 font-mono text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
               >
                 <MessageSquare size={14} />
@@ -76,6 +78,7 @@ export default function Contact() {
                 href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit Sidharth Deora's LinkedIn profile"
                 className="py-3 px-4 border border-sky-500/40 text-sky-400 hover:bg-sky-500/10 font-mono text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
               >
                 <LinkIcon size={14} />
@@ -85,6 +88,7 @@ export default function Contact() {
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit Sidharth Deora's Instagram profile"
                 className="py-3 px-4 border border-pink-500/40 text-pink-400 hover:bg-pink-500/10 font-mono text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
               >
                 <Camera size={14} />

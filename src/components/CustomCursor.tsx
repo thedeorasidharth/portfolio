@@ -14,13 +14,11 @@ export default function CustomCursor() {
   const cursorY = useSpring(0, { damping: 20, stiffness: 100 });
 
   useEffect(() => {
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsCoarsePointer(coarse);
     setMounted(true);
 
-    // Check pointer type once on mount — this never changes during a session
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    setIsCoarsePointer(coarse);
-
-    // Skip mouse-move listener entirely on touch devices — saves one listener
     if (coarse) return;
 
     const moveCursor = (e: MouseEvent) => {

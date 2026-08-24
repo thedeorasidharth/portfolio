@@ -19,7 +19,8 @@ export function getDeviceTier(): DeviceTier {
   if (typeof window === "undefined") return "medium";
 
   // navigator.deviceMemory is Chrome/Android only; values: 0.25 | 0.5 | 1 | 2 | 4 | 8
-  const memory: number = (navigator as any).deviceMemory ?? 4;
+  const memory: number =
+    (navigator as unknown as { deviceMemory?: number }).deviceMemory ?? 4;
 
   // Physical CPU core count (browsers may report logical cores)
   const cores: number = navigator.hardwareConcurrency ?? 4;

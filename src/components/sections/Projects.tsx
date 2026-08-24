@@ -79,6 +79,7 @@ export default function Projects() {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`View ${project.title} project - ${project.desc}`}
               className="block glass p-6 md:p-8 border border-sky-500/20 bg-slate-950/20 backdrop-blur-md hover:bg-slate-900/30 transition-all duration-300 relative overflow-hidden group-active:scale-[0.99] rounded-sm"
             >
               {/* Top Row: ID & Featured Badge */}
