@@ -7,18 +7,28 @@ import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
 import Projects from "@/components/sections/Projects";
+import Freelance from "@/components/sections/Freelance";
+import GithubActivity from "@/components/sections/GithubActivity";
 import Resume from "@/components/sections/Resume";
 import Contact from "@/components/sections/Contact";
 import CinematicIntro from "./CinematicIntro";
 
-const Section = ({ children, id, className = "" }: { children: React.ReactNode; id?: string; className?: string }) => (
+const Section = ({
+  children,
+  id,
+  className = "",
+}: {
+  children: React.ReactNode;
+  id?: string;
+  className?: string;
+}) => (
   <section id={id} className={`section-container ${className}`}>
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.3 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="max-w-4xl mx-auto w-full px-6"
+      viewport={{ once: false, amount: 0.15 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="max-w-4xl mx-auto w-full px-4 md:px-6"
     >
       {children}
     </motion.div>
@@ -36,18 +46,18 @@ export default function Overlay() {
         )}
       </AnimatePresence>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: introActive ? 0 : 1 }}
-        transition={{ duration: 2, delay: 0.5 }}
+        transition={{ duration: 1.5, delay: 0.3 }}
         className="relative z-10"
       >
         <div className="overlay-top" />
         <div className="overlay-bottom" />
-        
+
         {!introActive && <HUD />}
 
-        <div className="relative">
+        <div className="relative space-y-12 md:space-y-20">
           <Section id="hero" className="items-center text-center">
             <Hero />
           </Section>
@@ -62,6 +72,14 @@ export default function Overlay() {
 
           <Section id="projects">
             <Projects />
+          </Section>
+
+          <Section id="freelance">
+            <Freelance />
+          </Section>
+
+          <Section id="github">
+            <GithubActivity />
           </Section>
 
           <Section id="resume">

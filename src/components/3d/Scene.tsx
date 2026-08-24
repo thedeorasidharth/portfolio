@@ -1,90 +1,188 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { ScrollControls, Scroll, Environment as EnvironmentDrei } from "@react-three/drei";
-import { Suspense, useState, useEffect } from "react";
-import Jet from "./Jet";
+import { Canvas } from "@react-three/fiber";
+
+import {
+  Environment as EnvironmentDrei,
+  useProgress,
+} from "@react-three/drei";
+
+import { Suspense, useState } from "react";
+
+import JetFormation from "./Jet";
 import Environment from "./Environment";
 import LensFlare from "./LensFlare";
-import { Bloom, EffectComposer, Noise, Vignette, ChromaticAberration } from "@react-three/postprocessing";
+
+import {
+  Bloom,
+  EffectComposer,
+  Noise,
+  Vignette,
+  ChromaticAberration,
+} from "@react-three/postprocessing";
+
 import * as THREE from "three";
 
-function CameraController({ introActive }: { introActive: boolean }) {
-  const { camera } = useThree();
-  const targetPos = new THREE.Vector3(0, 3, 20);
-  const startPos = new THREE.Vector3(20, 15, 60);
+import { useDeviceTier } from "@/hooks/useDeviceTier";
+import type { DeviceTier } from "@/hooks/useDeviceTier";
 
-  useEffect(() => {
-    camera.position.copy(startPos);
-  }, [camera]);
 
-  useFrame((state, delta) => {
-    if (!introActive) {
-      camera.position.lerp(targetPos, 0.02);
-    } else {
-      camera.position.lerp(new THREE.Vector3(10, 10, 50), 0.01);
-    }
-    camera.lookAt(0, 0, 0);
-  });
+// ============================================================
+// CHROMATIC ABERRATION
+// ============================================================
 
-  return null;
+const CHROMATIC_OFFSET = new THREE.Vector2(
+  0.0005,
+  0.0005
+);
+
+
+// ============================================================
+// LOADING INDICATOR
+// ============================================================
+
+function SceneLoadingIndicator() {
+  const {
+    progress,
+    active,
+  } = useProgress();
+
+  if (!active) return null;
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        bottom: "48px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 5,
+        pointerEvents: "none",
+
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+
+        gap: "8px",
+      }}
+    >
+      <span
+        style={{
+          fontFamily: "monospace",
+          fontSize: "10px",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+
+          color:
+            "rgba(56, 189, 248, 0.55)",
+
+          textShadow:
+            "0 0 8px rgba(56, 189, 248, 0.35)",
+        }}
+      >
+        LOADING ASSETS —{" "}
+        {Math.round(progress)}%
+      </span>
+
+      <div
+        style={{
+          width: "160px",
+          height: "1px",
+
+          background:
+            "rgba(56, 189, 248, 0.12)",
+
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            width: `${progress}%`,
+            height: "100%",
+
+            background:
+              "rgba(56, 189, 248, 0.5)",
+
+            transition:
+              "width 0.15s linear",
+
+            boxShadow:
+              "0 0 6px rgba(56, 189, 248, 0.4)",
+          }}
+        />
+      </div>
+    </div>
+  );
 }
 
-function CinematicLighting() {
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+// ============================================================
+// CINEMATIC LIGHTING
+// ============================================================
+
+function CinematicLighting({
+  tier,
+}: {
+  tier: DeviceTier;
+}) {
+  const isLow = tier === "low";
 
   return (
     <>
-      {/* AMBIENT LIGHT: Base visibility with warm tint */}
-      <ambientLight intensity={0.15} color="#1e293b" />
-
-      {/* MAIN GOLDEN HOUR LIGHT: Back-Right Angle */}
-      <directionalLight
-        position={[15, 8, -12]}
-        intensity={2.2}
-        color="#fb923c"
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-        shadow-camera-far={50}
-        shadow-camera-left={-20}
-        shadow-camera-right={20}
-        shadow-camera-top={20}
-        shadow-camera-bottom={-20}
+      {/* Ambient */}
+      <ambientLight
+        intensity={0.22}
+        color="#1e293b"
       />
 
-      {/* SUNSET CORE GLOW: Deep orange mix */}
-      <pointLight 
-        position={[20, 5, -20]} 
-        intensity={150} 
-        color="#f97316" 
-        distance={100} 
-        decay={2}
-      />
-
-      {/* FILL LIGHT: Cool balanced light from front-left */}
-      {!isMobile && (
+      {/* Main sunset light */}
+      {isLow ? (
         <directionalLight
-          position={[-10, 2, 10]}
-          intensity={0.4}
-          color="#60a5fa"
+          position={[20, 8, -20]}
+          intensity={2.0}
+          color="#fb923c"
+        />
+      ) : (
+        <directionalLight
+          position={[20, 8, -20]}
+          intensity={2.0}
+          color="#fb923c"
+          castShadow
+          shadow-mapSize={[1024, 1024]}
+          shadow-camera-far={50}
+          shadow-camera-left={-20}
+          shadow-camera-right={20}
+          shadow-camera-top={20}
+          shadow-camera-bottom={-20}
         />
       )}
 
-      {/* DYNAMIC RIM LIGHT: Highlighting the right edges */}
-      {!isMobile && (
+      {/* Warm horizon */}
+      <pointLight
+        position={[25, 4, -25]}
+        intensity={80}
+        color="#f97316"
+        distance={80}
+        decay={2}
+      />
+
+      {/* Cool fill */}
+      {!isLow && (
+        <directionalLight
+          position={[-15, 4, 15]}
+          intensity={0.35}
+          color="#38bdf8"
+        />
+      )}
+
+      {/* Rim light */}
+      {tier === "high" && (
         <spotLight
           position={[12, 4, -10]}
-          angle={0.6}
+          angle={0.5}
           penumbra={1}
-          intensity={5}
-          color="#ffca28" // Golden rim
+          intensity={3.5}
+          color="#ffca28"
           target-position={[0, 0, 0]}
         />
       )}
@@ -92,57 +190,187 @@ function CinematicLighting() {
   );
 }
 
-export default function Scene() {
-  const [sonicBoom, setSonicBoom] = useState(false);
-  const [introActive, setIntroActive] = useState(true);
 
-  useEffect(() => {
-    const handleIntroEnd = () => setIntroActive(false);
-    window.addEventListener("intro-complete", handleIntroEnd);
-    return () => window.removeEventListener("intro-complete", handleIntroEnd);
-  }, []);
+// ============================================================
+// POST PROCESSING
+// ============================================================
+
+function TieredPostProcessing({
+  tier,
+}: {
+  tier: DeviceTier;
+}) {
+  // Low devices → no post processing
+  if (tier === "low") {
+    return null;
+  }
+
+  // Medium
+  if (tier === "medium") {
+    return (
+      <EffectComposer>
+        <Bloom
+          luminanceThreshold={1.2}
+          mipmapBlur={false}
+          intensity={0.6}
+          radius={0.3}
+        />
+
+        <Vignette
+          eskil={false}
+          offset={0.15}
+          darkness={1.2}
+        />
+      </EffectComposer>
+    );
+  }
+
+  // High
+  return (
+    <EffectComposer>
+      <Bloom
+        luminanceThreshold={1.2}
+        mipmapBlur
+        intensity={0.7}
+        radius={0.35}
+      />
+
+      <Noise opacity={0.04} />
+
+      <Vignette
+        eskil={false}
+        offset={0.15}
+        darkness={1.2}
+      />
+
+      <ChromaticAberration
+        offset={CHROMATIC_OFFSET}
+      />
+    </EffectComposer>
+  );
+}
+
+
+// ============================================================
+// MAIN SCENE
+// ============================================================
+
+export default function Scene() {
+  const [
+    sonicBoom,
+    setSonicBoom,
+  ] = useState(false);
+
+  const tier = useDeviceTier();
+
+  // ==========================================================
+  // DPR
+  // ==========================================================
+
+  const dpr: [number, number] =
+    tier === "high"
+      ? [1, 2]
+      : tier === "medium"
+        ? [1, 1.5]
+        : [0.75, 1];
+
+  const enableShadows =
+    tier !== "low";
+
+  // ==========================================================
+  // SONIC BOOM
+  // ==========================================================
 
   const triggerSonicBoom = () => {
     setSonicBoom(true);
-    setTimeout(() => setSonicBoom(false), 500);
+
+    window.setTimeout(() => {
+      setSonicBoom(false);
+    }, 500);
   };
 
   return (
     <>
-      <div className={`sonic-flash ${sonicBoom ? 'animate-flash' : ''}`} />
-      
-      <div className={`w-full h-full ${sonicBoom ? 'animate-shake' : ''}`}>
+      {/* Sonic flash */}
+      <div
+        className={`sonic-flash ${sonicBoom
+            ? "animate-flash"
+            : ""
+          }`}
+      />
+
+      <div
+        className={`w-full h-full ${sonicBoom
+            ? "animate-shake"
+            : ""
+          }`}
+        style={{
+          position: "relative",
+        }}
+      >
+        {/* Loading */}
+        <SceneLoadingIndicator />
+
+        {/* ====================================================
+            IMPORTANT:
+            NO CAMERA PROP HERE.
+            
+            Jet.tsx controls camera based on scroll.
+            ==================================================== */}
+
         <Canvas
-          shadows
-          gl={{ antialias: false, powerPreference: "high-performance" }}
-          dpr={[1, 2]}
+          shadows={enableShadows}
+          gl={{
+            antialias: false,
+            powerPreference:
+              "high-performance",
+
+            toneMappingExposure: 0.85,
+          }}
+          dpr={dpr}
         >
-          <CameraController introActive={introActive} />
-          <color attach="background" args={["#020617"]} />
-          
-          <CinematicLighting />
+          {/* Base background */}
+          <color
+            attach="background"
+            args={["#0a0e24"]}
+          />
+
+          {/* Lighting */}
+          <CinematicLighting
+            tier={tier}
+          />
 
           <Suspense fallback={null}>
-            <ScrollControls pages={6} damping={0.1}>
-              <Scroll>
-                <Jet onSonicBoom={triggerSonicBoom} introActive={introActive} />
-                <Environment />
-                <LensFlare />
-                <EnvironmentDrei preset="sunset" />
-              </Scroll>
-              
-              <EffectComposer>
-                <Bloom 
-                  luminanceThreshold={1.2} 
-                  mipmapBlur 
-                  intensity={1.0} 
-                  radius={0.4} 
+            {/* Jets */}
+            <JetFormation
+              onSonicBoom={
+                triggerSonicBoom
+              }
+            />
+
+            {/* Procedural environment */}
+            <Environment
+              tier={tier}
+            />
+
+            {/* Lens flare */}
+            <LensFlare
+              tier={tier}
+            />
+
+            {/* HDR sunset environment */}
+            {tier !== "low" && (
+              <Suspense fallback={null}>
+                <EnvironmentDrei
+                  preset="sunset"
                 />
-                <Noise opacity={0.05} />
-                <Vignette eskil={false} offset={0.1} darkness={1.1} />
-                <ChromaticAberration offset={new THREE.Vector2(0.0005, 0.0005)} />
-              </EffectComposer>
-            </ScrollControls>
+              </Suspense>
+            )}
+
+            {/* Effects */}
+            <TieredPostProcessing
+              tier={tier}
+            />
           </Suspense>
         </Canvas>
       </div>

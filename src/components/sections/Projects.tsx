@@ -1,150 +1,139 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Terminal, Code, Database, Layers } from "lucide-react";
+import { ExternalLink, Terminal, Code } from "lucide-react";
 
-const projects = [
+interface ProjectItem {
+  id: string;
+  title: string;
+  desc: string;
+  tech: string[];
+  github: string;
+  isFeatured?: boolean;
+}
+
+const projects: ProjectItem[] = [
   {
-    title: "HEALTHX",
-    desc: "A comprehensive full-stack system for managing patients, doctors, medical records, and appointments with real-time tracking.",
-    tech: ["MERN Stack", "MongoDB", "Express", "React", "Node"],
-    id: "HOSP-001",
-    github: "https://github.com/thedeorasidharth/HEALTHX"
+    id: "EDU-001",
+    title: "EDUSPARK",
+    desc: "Interactive educational platform featuring collaborative learning tools, real-time study rooms, resource sharing, and course management.",
+    tech: ["React", "Next.js", "Node.js", "MongoDB", "Socket.io"],
+    github: "https://www.edusparksheoganj.in/",
+    isFeatured: true,
   },
   {
+    id: "SKILL-003",
+    title: "SKILLSHARE LIVE",
+    desc: "Real-time study platform enabling users to join interactive rooms for collaborative learning and live interaction.",
+    tech: ["React", "Node.js", "Socket.io", "Express"],
+    github: "https://skillshare-delta.vercel.app/",
+  },
+  {
+    id: "HOSP-001",
+    title: "HEALTHX",
+    desc: "A comprehensive full-stack medical management platform for patients, doctors, records, and real-time appointment tracking.",
+    tech: ["MERN Stack", "MongoDB", "Express", "React", "Node.js"],
+    github: "https://healthx-five.vercel.app/",
+  },
+  {
+    id: "NOTE-002",
     title: "NOTEHIVE",
     desc: "Collaborative notes sharing platform featuring PDF uploads, AI-powered summarization, search, and a rating system.",
     tech: ["MERN Stack", "JWT", "Multer", "MongoDB"],
-    id: "NOTE-002",
-    github: "https://github.com/thedeorasidharth/NOTEHIVE-V2"
+    github: "https://github.com/thedeorasidharth/NOTEHIVE-V2",
   },
-  {
-    title: "SKILLSHARE LIVE",
-    desc: "Real-time study platform enabling users to join interactive rooms for collaborative learning and live interaction.",
-    tech: ["React", "Node.js", "Socket.io"],
-    id: "SKILL-003",
-    github: "https://skillshare-delta.vercel.app/"
-  },
+
 ];
 
 export default function Projects() {
   return (
-    <div className="space-y-20">
-      <div>
-        <h2 className="hud-text text-2xl mb-12 flex items-center gap-4">
-          <span className="w-8 h-[1px] bg-sky-500" />
-          MISSION_LOG // ACTIVE_DEPLOYMENTS
-        </h2>
+    <div className="relative py-8">
+      <motion.h2
+        initial={{ opacity: 0, x: -10 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        className="hud-text text-xl md:text-2xl mb-8 flex items-center gap-4 text-slate-300"
+      >
+        <span className="w-8 h-[1px] bg-sky-500" />
+        MISSION_LOG // ACTIVE_DEPLOYMENTS
+      </motion.h2>
 
-        <div className="space-y-12">
-          {projects.map((project, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative"
+      <div className="grid grid-cols-1 gap-6">
+        {projects.map((project, i) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ delay: i * 0.08, duration: 0.5 }}
+            className="group relative"
+          >
+            {/* Target Lock-on Corner Accents on Hover */}
+            <div className="absolute -inset-2 border border-red-500/0 group-hover:border-red-500/30 transition-all duration-300 pointer-events-none z-20 rounded-sm">
+              <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100" />
+              <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-500 opacity-0 group-hover:opacity-100" />
+              <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-red-500 opacity-0 group-hover:opacity-100" />
+            </div>
+
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block glass p-6 md:p-8 border border-sky-500/20 bg-slate-950/20 backdrop-blur-md hover:bg-slate-900/30 transition-all duration-300 relative overflow-hidden group-active:scale-[0.99] rounded-sm"
             >
-              {/* Targeting Lock-on 🔴 */}
-              <div className="absolute -inset-4 border-2 border-red-600/0 group-hover:border-red-600/30 transition-all duration-300 pointer-events-none z-20">
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100" />
-                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-red-500 opacity-0 group-hover:opacity-100" />
-                <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100" />
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-red-500 opacity-0 group-hover:opacity-100" />
-
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">
-                  <div className="w-4 h-4 bg-red-600 rounded-full animate-ping" />
-                  <span className="hud-text text-red-500 mt-2 text-[8px]">TARGET_LOCKED</span>
+              {/* Top Row: ID & Featured Badge */}
+              <div className="flex justify-between items-start gap-4 mb-3">
+                <div className="flex items-center gap-3">
+                  <span className="hud-text text-sky-400 text-[10px] tracking-widest">
+                    ID: {project.id}
+                  </span>
+                  {project.isFeatured && (
+                    <span className="hud-text text-[9px] px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                      FEATURED BUILD
+                    </span>
+                  )}
                 </div>
+                <ExternalLink
+                  className="text-sky-400 opacity-50 group-hover:opacity-100 group-hover:text-white transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  size={18}
+                />
               </div>
 
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block glass p-8 cursor-pointer transition-all border-l-0 group-hover:border-l-4 group-hover:border-l-red-500 bg-white/5 hover:bg-white/10 group-active:scale-[0.98]"
-              >
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <span className="hud-text text-slate-500 mb-2 block">ID: {project.id}</span>
-                    <h3 className="text-3xl font-black mb-3 text-white tracking-tighter group-hover:text-sky-400 transition-colors italic">
-                      {project.title}
-                    </h3>
-                  </div>
-                  <ExternalLink className="text-sky-500 opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
-                </div>
+              {/* Title & Description */}
+              <h3 className="text-2xl md:text-3xl font-black mb-3 text-white tracking-tight group-hover:text-sky-400 transition-colors italic">
+                {project.title}
+              </h3>
 
-                <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                  {project.desc}
-                </p>
+              <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 font-light">
+                {project.desc}
+              </p>
 
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span key={t} className="text-[10px] px-3 py-1 bg-sky-500/10 text-sky-400 font-mono border border-sky-500/20 uppercase tracking-tighter">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
-                  <div className="flex gap-4 opacity-40">
-                    <Terminal size={16} />
-                    <Code size={16} />
-                  </div>
-                  <span className="hud-text text-sky-400 group-hover:text-white transition-colors">
-                    [ INITIALIZE_ACCESS ]
+              {/* Tech Stack Pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="text-[10px] px-2.5 py-1 bg-sky-500/10 text-sky-400 font-mono border border-sky-500/20 uppercase tracking-wider"
+                  >
+                    {t}
                   </span>
+                ))}
+              </div>
+
+              {/* Card Footer */}
+              <div className="pt-4 border-t border-white/10 flex justify-between items-center text-xs font-mono">
+                <div className="flex items-center gap-3 text-slate-500">
+                  <Terminal size={14} />
+                  <Code size={14} />
                 </div>
-              </a>
-            </motion.div>
-          ))}
-        </div>
+                <span className="hud-text text-sky-400 group-hover:text-white transition-colors">
+                  [ {project.isFeatured ? "VIEW PROJECT" : "INITIALIZE_ACCESS"} ]
+                </span>
+              </div>
+            </a>
+          </motion.div>
+        ))}
       </div>
-
-      {/* GitHub Stats Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        className="glass p-10 border-t-4 border-sky-500 bg-sky-500/5 relative overflow-hidden"
-      >
-        <div className="absolute top-0 right-0 p-4 opacity-5">
-          <Terminal size={120} />
-        </div>
-
-        <h3 className="hud-text text-xl mb-10 flex items-center gap-3">
-          <Terminal className="text-sky-500" size={20} />
-          GITHUB_SQUADRON_STATS
-        </h3>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-          <div className="flex flex-col">
-            <span className="hud-text text-slate-500 text-[9px] mb-2">TOTAL_PROJECTS</span>
-            <span className="text-4xl font-black text-white italic">24+</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="hud-text text-slate-500 text-[9px] mb-2">TOP_LANGUAGES</span>
-            <div className="flex gap-2">
-              <span className="text-xs px-2 py-1 bg-sky-500/10 text-sky-400 border border-sky-500/20">TS</span>
-              <span className="text-xs px-2 py-1 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">JS</span>
-              <span className="text-xs px-2 py-1 bg-blue-500/10 text-blue-500 border border-blue-500/20">React</span>
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="hud-text text-slate-500 text-[9px] mb-2">CONTRIBUTION_LEVEL</span>
-            <span className="text-xl font-bold text-green-400 uppercase tracking-widest">HIGH_INTENSITY</span>
-          </div>
-        </div>
-
-        <a
-          href="https://github.com/thedeorasidharth"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-4 px-8 py-4 bg-sky-500 text-slate-950 font-black uppercase tracking-[0.2em] hover:bg-white transition-all shadow-[0_0_20px_rgba(56,189,248,0.4)] group"
-        >
-          VIEW_FULL_PROFILE
-          <ExternalLink className="group-hover:translate-x-1 transition-transform" size={18} />
-        </a>
-      </motion.div>
     </div>
   );
 }
