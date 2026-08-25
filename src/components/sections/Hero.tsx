@@ -87,7 +87,7 @@ export default function Hero() {
               whitespace-nowrap
             "
           >
-            SIDHARTH DEORA
+            SIDHARTH
           </h1>
         </motion.div>
 
