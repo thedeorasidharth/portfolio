@@ -7,7 +7,7 @@ import {
   useProgress,
 } from "@react-three/drei";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 
 import JetFormation from "./Jet";
 import Environment from "./Environment";
@@ -256,10 +256,26 @@ function TieredPostProcessing({
 // ============================================================
 
 export default function Scene() {
-  const [
-    sonicBoom,
-    setSonicBoom,
-  ] = useState(false);
+  const [sonicBoom, setSonicBoom] = useState(false);
+  const [nightMode, setNightMode] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("portfolio_night_mode");
+        if (saved !== null) {
+          return saved === "true";
+        }
+      } catch {
+        // LocalStorage fallback
+      }
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    const handleNight = () => setNightMode((prev) => !prev);
+    window.addEventListener("toggle-night", handleNight);
+    return () => window.removeEventListener("toggle-night", handleNight);
+  }, []);
 
   const tier = useDeviceTier();
 
@@ -274,8 +290,7 @@ export default function Scene() {
         ? [1, 1.5]
         : [0.75, 1];
 
-  const enableShadows =
-    tier !== "low";
+  const enableShadows = tier !== "low";
 
   // ==========================================================
   // SONIC BOOM
@@ -293,17 +308,11 @@ export default function Scene() {
     <>
       {/* Sonic flash */}
       <div
-        className={`sonic-flash ${sonicBoom
-            ? "animate-flash"
-            : ""
-          }`}
+        className={`sonic-flash ${sonicBoom ? "animate-flash" : ""}`}
       />
 
       <div
-        className={`w-full h-full ${sonicBoom
-            ? "animate-shake"
-            : ""
-          }`}
+        className={`w-full h-full ${sonicBoom ? "animate-shake" : ""}`}
         style={{
           position: "relative",
         }}
@@ -311,20 +320,11 @@ export default function Scene() {
         {/* Loading */}
         <SceneLoadingIndicator />
 
-        {/* ====================================================
-            IMPORTANT:
-            NO CAMERA PROP HERE.
-            
-            Jet.tsx controls camera based on scroll.
-            ==================================================== */}
-
         <Canvas
-          shadows={enableShadows}
+          shadows={enableShadows ? { type: THREE.PCFShadowMap } : false}
           gl={{
             antialias: false,
-            powerPreference:
-              "high-performance",
-
+            powerPreference: "high-performance",
             toneMappingExposure: 0.85,
           }}
           dpr={dpr}
@@ -332,7 +332,7 @@ export default function Scene() {
           {/* Base background */}
           <color
             attach="background"
-            args={["#0a0e24"]}
+            args={[nightMode ? "#020617" : "#0a0e24"]}
           />
 
           {/* Lighting */}
@@ -343,9 +343,7 @@ export default function Scene() {
           <Suspense fallback={null}>
             {/* Jets */}
             <JetFormation
-              onSonicBoom={
-                triggerSonicBoom
-              }
+              onSonicBoom={triggerSonicBoom}
             />
 
             {/* Procedural environment */}
@@ -358,11 +356,11 @@ export default function Scene() {
               tier={tier}
             />
 
-            {/* HDR sunset environment */}
+            {/* HDR environment */}
             {tier !== "low" && (
               <Suspense fallback={null}>
                 <EnvironmentDrei
-                  preset="sunset"
+                  preset={nightMode ? "night" : "sunset"}
                 />
               </Suspense>
             )}

@@ -3,12 +3,17 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import HUD from "./HUD";
+import Navbar from "./Navbar";
 import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import Skills from "@/components/sections/Skills";
+import Services from "@/components/sections/Services";
+import EdusparkCaseStudy from "@/components/sections/EdusparkCaseStudy";
 import Projects from "@/components/sections/Projects";
-import Freelance from "@/components/sections/Freelance";
+import Process from "@/components/sections/Process";
+import Skills from "@/components/sections/Skills";
+import Experience from "@/components/sections/Experience";
+import About from "@/components/sections/About";
 import GithubActivity from "@/components/sections/GithubActivity";
+import Freelance from "@/components/sections/Freelance";
 import Resume from "@/components/sections/Resume";
 import Contact from "@/components/sections/Contact";
 import CinematicIntro from "./CinematicIntro";
@@ -55,37 +60,70 @@ export default function Overlay() {
         <div className="overlay-top" />
         <div className="overlay-bottom" />
 
-        {!introActive && <HUD />}
+        {!introActive && (
+          <>
+            <Navbar />
+            <HUD />
+          </>
+        )}
 
-        <div className="relative space-y-12 md:space-y-20">
+        <div className="relative space-y-12 md:space-y-20 pt-4">
+          {/* Hero Section */}
           <Section id="hero" className="items-center text-center">
             <Hero />
           </Section>
 
-          <Section id="about">
-            <About />
+          {/* What I Build Services Section */}
+          <Section id="services">
+            <Services />
           </Section>
 
-          <Section id="skills">
-            <Skills />
+          {/* Eduspark Flagship Case Study */}
+          <Section id="eduspark">
+            <EdusparkCaseStudy />
           </Section>
 
+          {/* Featured Projects */}
           <Section id="projects">
             <Projects />
           </Section>
 
-          <Section id="freelance">
-            <Freelance />
+          {/* How I Work Process */}
+          <Section id="process">
+            <Process />
           </Section>
 
+          {/* Technical Stack Domains */}
+          <Section id="skills">
+            <Skills />
+          </Section>
+
+          {/* Mission Log / Experience & Credibility */}
+          <Section id="experience">
+            <Experience />
+          </Section>
+
+          {/* About / Subject Profile */}
+          <Section id="about">
+            <About />
+          </Section>
+
+          {/* Live GitHub Telemetry Activity */}
           <Section id="github">
             <GithubActivity />
           </Section>
 
+          {/* Have a Project in Mind? Freelance CTA */}
+          <Section id="freelance">
+            <Freelance />
+          </Section>
+
+          {/* Resume Dossier */}
           <Section id="resume">
             <Resume />
           </Section>
 
+          {/* Establish Comm Link Contact */}
           <Section id="contact" className="items-center text-center">
             <Contact />
           </Section>

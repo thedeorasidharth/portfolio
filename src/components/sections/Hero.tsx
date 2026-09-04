@@ -1,190 +1,120 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowDownRight, Send, MapPin } from "lucide-react";
 
 export default function Hero() {
-  const handleEnterMission = () => {
+  const handleViewWork = () => {
     window.dispatchEvent(new CustomEvent("jet-burst"));
+    const workSection = document.getElementById("projects");
+    if (workSection) {
+      workSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-    const aboutSection = document.getElementById("about");
-
-    if (aboutSection) {
-      aboutSection.scrollIntoView({
-        behavior: "smooth",
-      });
+  const handleContact = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <div className="relative flex min-h-[90dvh] w-full max-w-full flex-col items-center justify-center overflow-hidden px-4 pt-20 text-center">
-
-      {/* HERO TEXT */}
-      <div className="relative flex w-full max-w-full flex-col items-center space-y-4">
-
-        {/* Callsign / Tagline */}
+    <div className="relative flex min-h-[90dvh] w-full max-w-full flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-12 text-center">
+      <div className="relative flex w-full max-w-4xl flex-col items-center space-y-6">
+        
+        {/* Availability & Location Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.2,
-          }}
-          className="mb-2 flex w-full max-w-full items-center justify-center gap-3 sm:gap-4"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="flex flex-wrap items-center justify-center gap-3"
         >
-          <div className="h-[1px] w-5 shrink-0 bg-[#00cfff] opacity-30 sm:w-8" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 backdrop-blur-md">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+            </span>
+            <span className="hud-text text-[9px] font-bold text-emerald-400 tracking-widest">
+              AVAILABLE FOR FREELANCE WORK
+            </span>
+          </div>
 
-          <span className="hud-text max-w-[85vw] text-[8px] font-bold tracking-[0.28em] text-[#00cfff] drop-shadow-[0_0_8px_rgba(0,207,255,0.4)] sm:text-xs sm:tracking-[0.6em] md:text-sm">
-            MISSION: BUILD. DEPLOY. DOMINATE.
-          </span>
-
-          <div className="h-[1px] w-5 shrink-0 bg-[#00cfff] opacity-30 sm:w-8" />
+          <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs font-mono">
+            <MapPin size={12} className="text-sky-400" />
+            <span>India (IST / UTC+5:30)</span>
+          </div>
         </motion.div>
 
-        {/* MAIN NAME */}
+        {/* Main Name & Title */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            filter: [
-              "brightness(1)",
-              "brightness(1.5)",
-              "brightness(1)",
-            ],
-          }}
-          transition={{
-            opacity: {
-              duration: 1,
-              delay: 0.4,
-            },
-            y: {
-              duration: 1,
-              delay: 0.4,
-            },
-            filter: {
-              duration: 0.2,
-              repeat: 3,
-              repeatDelay: 4,
-            },
-          }}
-          className="flex w-full max-w-full justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="space-y-2"
         >
-          <h1
-            className="
-              max-w-full
-              text-center
-              text-[clamp(2rem,8.5vw,9rem)]
-              font-black
-              uppercase
-              italic
-              leading-none
-              tracking-[-0.055em]
-              text-white
-              drop-shadow-2xl
-              whitespace-nowrap
-            "
-          >
-            SIDHARTH
+          <div className="hud-text text-sky-400 text-xs sm:text-sm font-bold tracking-[0.3em] uppercase">
+            FULL STACK ENGINEER
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white leading-[1.05] italic">
+            I BUILD <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-200 to-white drop-shadow-[0_0_25px_rgba(56,189,248,0.4)]">PRODUCTION-READY</span> WEB EXPERIENCES.
           </h1>
         </motion.div>
 
-        {/* SUBTITLE */}
+        {/* Supporting Copy */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="max-w-2xl text-slate-200 text-base sm:text-lg md:text-xl font-light leading-relaxed"
+        >
+          I design and develop fast, modern web applications, dashboards and full-stack systems for businesses, startups and organizations.
+        </motion.p>
+
+        {/* CTAs */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 10,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.8,
-          }}
-          className="flex w-full max-w-full justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto pt-2"
         >
-          <p
-            className="
-              max-w-[95vw]
-              text-center
-              text-[clamp(0.55rem,2.6vw,1.5rem)]
-              font-bold
-              leading-relaxed
-              tracking-[0.12em]
-              text-[#00cfff]
-              opacity-90
-              sm:tracking-[0.2em]
-              md:tracking-[0.25em]
-            "
+          <button
+            onClick={handleViewWork}
+            className="w-full sm:w-auto px-8 py-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-[0.2em] text-xs transition-all shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_35px_rgba(56,189,248,0.6)] flex items-center justify-center gap-3 rounded-sm group cursor-pointer"
           >
-            FULL-STACK ENGINEER // WEB SYSTEMS ARCHITECT
-          </p>
+            <span>VIEW MY WORK</span>
+            <ArrowDownRight size={16} className="group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
+          </button>
+
+          <button
+            onClick={handleContact}
+            className="w-full sm:w-auto px-8 py-4 border border-sky-500/40 bg-slate-900/60 hover:bg-sky-500/10 text-sky-300 hover:text-white font-black uppercase tracking-[0.2em] text-xs transition-all flex items-center justify-center gap-3 rounded-sm group cursor-pointer backdrop-blur-md"
+          >
+            <Send size={15} className="group-hover:translate-x-0.5 transition-transform text-sky-400" />
+            <span>LET&apos;S WORK TOGETHER</span>
+          </button>
         </motion.div>
-      </div>
 
-      {/* ENTER MISSION */}
-      <motion.div
-        initial={{
-          y: 50,
-          opacity: 0,
-        }}
-        animate={{
-          y: 0,
-          opacity: 1,
-        }}
-        transition={{
-          delay: 1.2,
-          duration: 1,
-        }}
-        className="mt-8 flex flex-col items-center gap-8 sm:mt-10"
-      >
-        <button
-          onClick={handleEnterMission}
-          className="
-            relative
-            group
-            overflow-hidden
-            rounded-none
-            border-2
-            border-[#00cfff]/30
-            bg-white/[0.03]
-            px-10
-            py-5
-            font-black
-            uppercase
-            tracking-[0.3em]
-            text-[#00cfff]
-            shadow-[0_0_20px_rgba(0,207,255,0.1)]
-            transition-all
-            hover:border-[#00cfff]/60
-            hover:bg-[#00cfff]/10
-            active:scale-95
-            sm:px-14
-            sm:py-6
-            sm:tracking-[0.4em]
-          "
+        {/* Subtle Tech Stack Pills */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="pt-6 border-t border-white/10 w-full max-w-xl flex flex-wrap justify-center items-center gap-2 text-xs font-mono"
         >
-          {/* HUD accents */}
-          <div className="absolute left-0 top-0 h-2 w-2 border-l-2 border-t-2 border-[#00cfff] opacity-40" />
+          <span className="hud-text text-slate-400 text-[9px] mr-2">CORE STACK:</span>
+          {["MERN Stack", "React", "Next.js", "Node.js", "TypeScript", "MongoDB"].map((tech) => (
+            <span
+              key={tech}
+              className="px-2.5 py-1 bg-white/[0.03] border border-sky-500/15 text-slate-300 text-[11px] rounded-sm hover:border-sky-500/40 transition-colors"
+            >
+              {tech}
+            </span>
+          ))}
+        </motion.div>
 
-          <div className="absolute bottom-0 right-0 h-2 w-2 border-b-2 border-r-2 border-[#00cfff] opacity-40" />
-
-          {/* Hover lock animation */}
-          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">
-            <div className="absolute inset-0 animate-pulse border-2 border-red-500/30" />
-          </div>
-
-          <span className="relative z-10 text-xs sm:text-sm md:text-base">
-            ENTER MISSION
-          </span>
-        </button>
-
-        <div className="h-12 w-[2px] bg-gradient-to-b from-[#00cfff] to-transparent opacity-20 sm:h-16" />
-      </motion.div>
+      </div>
     </div>
   );
 }

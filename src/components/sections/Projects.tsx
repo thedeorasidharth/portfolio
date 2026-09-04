@@ -1,137 +1,235 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Terminal, Code } from "lucide-react";
+import { ExternalLink, Code2, CheckCircle, UserCheck } from "lucide-react";
 
-interface ProjectItem {
+interface FeaturedProject {
   id: string;
   title: string;
+  subtitle: string;
   desc: string;
+  problem: string;
+  solution: string;
+  features: string[];
   tech: string[];
-  github: string;
-  isFeatured?: boolean;
+  role: string;
+  liveUrl?: string;
+  githubUrl?: string;
+  isFlagship?: boolean;
 }
 
-const projects: ProjectItem[] = [
+const featuredProjects: FeaturedProject[] = [
   {
-    id: "EDU-001",
+    id: "PROJ-01",
     title: "EDUSPARK",
-    desc: "Interactive educational platform featuring collaborative learning tools, real-time study rooms, resource sharing, and course management.",
-    tech: ["React", "Next.js", "Node.js", "MongoDB", "Socket.io"],
-    github: "https://www.edusparksheoganj.in/",
-    isFeatured: true,
+    subtitle: "Online Examination & Assessment Platform",
+    desc: "A production-ready online examination platform engineered to manage assessments, students, timed tests, automated grading, and score analytics.",
+    problem: "Traditional paper exams suffer from manual grading delays, error-prone evaluation, and administrative friction for institutions.",
+    solution: "Developed a full-stack assessment portal with secure student logins, timed test workflows, OMR-style auto-grading, and instant score distribution.",
+    features: [
+      "Student authentication & session management",
+      "Timed examination workflow with anti-cheat timeout controls",
+      "Automated OMR-style evaluation engine",
+      "Student history & performance tracking dashboards",
+    ],
+    tech: ["React", "Next.js", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+    role: "Full-Stack Developer & System Architect",
+    liveUrl: "https://www.edusparksheoganj.in/",
+    isFlagship: true,
   },
   {
-    id: "SKILL-003",
+    id: "PROJ-02",
     title: "SKILLSHARE LIVE",
-    desc: "Real-time study platform enabling users to join interactive rooms for collaborative learning and live interaction.",
-    tech: ["React", "Node.js", "Socket.io", "Express"],
-    github: "https://skillshare-delta.vercel.app/",
+    subtitle: "Real-Time Collaborative Study Rooms & Interaction Hub",
+    desc: "Interactive study environment enabling users to launch live study rooms, chat synchronously, share resources, and collaborate in real-time.",
+    problem: "Remote students struggle to maintain focus and collaborate live without heavy video conferencing overhead.",
+    solution: "Engineered a low-latency WebSockets application powering real-time chat rooms, study session timers, and active member presence monitoring.",
+    features: [
+      "Real-time multi-user study rooms via WebSockets",
+      "Live chat & instant resource link distribution",
+      "Presence status indicators & active room monitoring",
+      "Clean, minimalist dark interface design",
+    ],
+    tech: ["React", "Node.js", "Socket.io", "Express.js", "Tailwind CSS"],
+    role: "Full-Stack Developer",
+    liveUrl: "https://skillshare-delta.vercel.app/",
   },
   {
-    id: "HOSP-001",
+    id: "PROJ-03",
     title: "HEALTHX",
-    desc: "A comprehensive full-stack medical management platform for patients, doctors, records, and real-time appointment tracking.",
-    tech: ["MERN Stack", "MongoDB", "Express", "React", "Node.js"],
-    github: "https://healthx-five.vercel.app/",
+    subtitle: "Full-Stack Medical Management Platform",
+    desc: "Comprehensive web platform for managing patient records, doctor profiles, medical departments, and real-time appointment scheduling workflows.",
+    problem: "Healthcare facilities often rely on fragmented paper or legacy spreadsheets to track patients and doctor shifts, leading to scheduling double-bookings.",
+    solution: "Built a centralized MERN web application with role-based access for patients and staff, streamlined appointment booking, and organized record storage.",
+    features: [
+      "Patient & doctor dashboard workflows",
+      "Real-time appointment scheduling & status tracking",
+      "Medical records database management",
+      "Responsive emergency triage UI",
+    ],
+    tech: ["MERN Stack", "MongoDB", "Express.js", "React", "Node.js", "Tailwind CSS"],
+    role: "Full-Stack Developer",
+    liveUrl: "https://healthx-five.vercel.app/",
   },
   {
-    id: "NOTE-002",
+    id: "PROJ-04",
     title: "NOTEHIVE",
-    desc: "Collaborative notes sharing platform featuring PDF uploads, AI-powered summarization, search, and a rating system.",
-    tech: ["MERN Stack", "JWT", "Multer", "MongoDB"],
-    github: "https://github.com/thedeorasidharth/NOTEHIVE-V2",
+    subtitle: "Collaborative Academic Notes Sharing & AI Platform",
+    desc: "Academic notes sharing network featuring multi-format PDF uploads, AI-powered text summarization, instant search, and community rating metrics.",
+    problem: "Students lack a structured platform to exchange verified study notes, search course documents quickly, or get concise summaries before exams.",
+    solution: "Architected a full-stack notes repository supporting PDF file uploads via Multer, token authentication, intelligent text searching, and AI summary capabilities.",
+    features: [
+      "PDF upload pipeline & document file handling",
+      "AI-powered note summarization engine",
+      "User rating system & category search filters",
+      "JWT user authentication & profile history",
+    ],
+    tech: ["MongoDB", "Express.js", "React", "Node.js", "Multer", "JWT", "Tailwind CSS"],
+    role: "Full-Stack Developer",
+    githubUrl: "https://github.com/thedeorasidharth/NOTEHIVE-V2",
   },
-
 ];
 
 export default function Projects() {
   return (
     <div className="relative py-8">
-      <motion.h2
+      {/* Section Header */}
+      <motion.div
         initial={{ opacity: 0, x: -10 }}
         whileInView={{ opacity: 1, x: 0 }}
-        className="hud-text text-xl md:text-2xl mb-8 flex items-center gap-4 text-slate-300"
+        viewport={{ once: false, amount: 0.2 }}
+        className="mb-8"
       >
-        <span className="w-8 h-[1px] bg-sky-500" />
-        MISSION_LOG // ACTIVE_DEPLOYMENTS
-      </motion.h2>
+        <h2 className="hud-text text-xl md:text-2xl flex items-center gap-4 text-slate-300">
+          <span className="w-8 h-[1px] bg-sky-500" />
+          FEATURED_DEPLOYMENTS // PRODUCTION PROJECTS
+        </h2>
+        <p className="text-slate-300 text-sm md:text-base font-light mt-2 max-w-2xl">
+          Curated selection of real-world full-stack applications built with robust backend systems, databases, and modern frontend interfaces.
+        </p>
+      </motion.div>
 
-      <div className="grid grid-cols-1 gap-6">
-        {projects.map((project, i) => (
+      {/* Projects Stack */}
+      <div className="space-y-8">
+        {featuredProjects.map((project, i) => (
           <motion.div
             key={project.id}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ delay: i * 0.08, duration: 0.5 }}
-            className="group relative"
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ delay: i * 0.1, duration: 0.6 }}
+            className={`glass p-6 md:p-10 border bg-slate-950/30 backdrop-blur-md relative overflow-hidden group rounded-sm transition-all ${
+              project.isFlagship
+                ? "border-sky-500/40 shadow-[0_0_25px_rgba(56,189,248,0.1)]"
+                : "border-sky-500/20 hover:border-sky-500/40"
+            }`}
           >
-            {/* Target Lock-on Corner Accents on Hover */}
-            <div className="absolute -inset-2 border border-red-500/0 group-hover:border-red-500/30 transition-all duration-300 pointer-events-none z-20 rounded-sm">
-              <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-500 opacity-0 group-hover:opacity-100" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-red-500 opacity-0 group-hover:opacity-100" />
-            </div>
+            {/* Tactical Corner Accents */}
+            <div className="absolute top-0 left-0 w-3.5 h-3.5 border-t-2 border-l-2 border-sky-400 opacity-70" />
+            <div className="absolute top-0 right-0 w-3.5 h-3.5 border-t-2 border-r-2 border-sky-400 opacity-70" />
+            <div className="absolute bottom-0 left-0 w-3.5 h-3.5 border-b-2 border-l-2 border-sky-400 opacity-70" />
+            <div className="absolute bottom-0 right-0 w-3.5 h-3.5 border-b-2 border-r-2 border-sky-400 opacity-70" />
 
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View ${project.title} project - ${project.desc}`}
-              className="block glass p-6 md:p-8 border border-sky-500/20 bg-slate-950/20 backdrop-blur-md hover:bg-slate-900/30 transition-all duration-300 relative overflow-hidden group-active:scale-[0.99] rounded-sm"
-            >
-              {/* Top Row: ID & Featured Badge */}
-              <div className="flex justify-between items-start gap-4 mb-3">
+            <div className="relative z-10 space-y-6">
+              {/* Top Row Header */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/10">
                 <div className="flex items-center gap-3">
-                  <span className="hud-text text-sky-400 text-[10px] tracking-widest">
-                    ID: {project.id}
+                  <span className="hud-text text-sky-400 text-xs font-mono font-bold">
+                    {project.id}
                   </span>
-                  {project.isFeatured && (
-                    <span className="hud-text text-[9px] px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                      FEATURED BUILD
+                  {project.isFlagship && (
+                    <span className="px-2.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[9px] font-mono tracking-widest uppercase">
+                      FLAGSHIP BUILD
                     </span>
                   )}
+                  <span className="text-xs text-slate-300 font-mono hidden sm:inline-block">
+                    • {project.subtitle}
+                  </span>
                 </div>
-                <ExternalLink
-                  className="text-sky-400 opacity-50 group-hover:opacity-100 group-hover:text-white transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  size={18}
-                />
+
+                <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
+                  <UserCheck size={14} className="text-sky-400" />
+                  <span>ROLE: {project.role}</span>
+                </div>
               </div>
 
               {/* Title & Description */}
-              <h3 className="text-2xl md:text-3xl font-black mb-3 text-white tracking-tight group-hover:text-sky-400 transition-colors italic">
-                {project.title}
-              </h3>
-
-              <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 font-light">
-                {project.desc}
-              </p>
-
-              {/* Tech Stack Pills */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[10px] px-2.5 py-1 bg-sky-500/10 text-sky-400 font-mono border border-sky-500/20 uppercase tracking-wider"
-                  >
-                    {t}
-                  </span>
-                ))}
+              <div>
+                <h3 className="text-2xl md:text-4xl font-black text-white italic tracking-tight mb-2 group-hover:text-sky-300 transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-slate-200 text-sm md:text-base font-light leading-relaxed max-w-3xl">
+                  {project.desc}
+                </p>
               </div>
 
-              {/* Card Footer */}
-              <div className="pt-4 border-t border-white/10 flex justify-between items-center text-xs font-mono">
-                <div className="flex items-center gap-3 text-slate-500">
-                  <Terminal size={14} />
-                  <Code size={14} />
+              {/* Problem vs Solution Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                <div className="p-4 bg-slate-900/50 border border-white/10 rounded-sm">
+                  <span className="hud-text text-amber-400 text-[9px] block mb-1">PROBLEM</span>
+                  <p className="text-slate-300 font-light leading-relaxed">{project.problem}</p>
                 </div>
-                <span className="hud-text text-sky-400 group-hover:text-white transition-colors">
-                  [ {project.isFeatured ? "VIEW PROJECT" : "INITIALIZE_ACCESS"} ]
-                </span>
+                <div className="p-4 bg-slate-900/50 border border-sky-500/20 rounded-sm">
+                  <span className="hud-text text-sky-400 text-[9px] block mb-1">SOLUTION</span>
+                  <p className="text-slate-300 font-light leading-relaxed">{project.solution}</p>
+                </div>
               </div>
-            </a>
+
+              {/* Key Features Grid */}
+              <div>
+                <span className="hud-text text-sky-400 text-[10px] block mb-2 tracking-widest font-bold">
+                  KEY IMPLEMENTED FEATURES
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {project.features.map((feat, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-xs text-slate-200 font-mono">
+                      <CheckCircle size={13} className="text-sky-400 shrink-0" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tech Stack Pills & Links Footer */}
+              <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[10px] px-2.5 py-1 bg-sky-500/10 text-sky-300 font-mono border border-sky-500/20 uppercase tracking-wider rounded-sm"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3 shrink-0">
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 border border-sky-500/30 hover:border-sky-400 bg-slate-900/60 hover:bg-sky-500/10 text-sky-300 hover:text-white font-mono text-xs uppercase tracking-wider transition-all flex items-center gap-2 rounded-sm cursor-pointer"
+                    >
+                      <Code2 size={14} />
+                      <span>GITHUB REPO</span>
+                    </a>
+                  )}
+
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase text-xs tracking-wider transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(56,189,248,0.3)] rounded-sm cursor-pointer"
+                    >
+                      <span>LIVE DEMO</span>
+                      <ExternalLink size={14} />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
           </motion.div>
         ))}
       </div>

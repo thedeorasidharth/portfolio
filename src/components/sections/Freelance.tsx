@@ -1,15 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Terminal, Send, Zap } from "lucide-react";
+import { Send, MessageSquare, Terminal, Zap, CheckCircle2 } from "lucide-react";
+import { siteConfig } from "@/lib/site-config";
 
-const services = [
-  "Full-Stack Web Development",
-  "Frontend Architecture & Engineering",
-  "React / Next.js Web Applications",
-  "UI/UX Design & Creative Interfaces",
-  "3D / Interactive Web Experiences (Three.js)",
-  "Performance Optimization & Web Vitals",
+const servicesList = [
+  "Full-Stack Web Application Development",
+  "Custom Next.js & React Dashboards",
+  "Online Examination & Assessment Systems",
+  "RESTful API & Database Integration",
+  "UI/UX Design & Tactical Glass Interfaces",
+  "Performance & Web Vitals Optimization",
 ];
 
 export default function Freelance() {
@@ -18,39 +19,44 @@ export default function Freelance() {
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.location.href = "mailto:deorasidharth@gmail.com?subject=Project%20Inquiry%20-%20Freelance";
+      window.location.href = siteConfig.socials.whatsapp;
     }
   };
 
   return (
     <div className="relative py-8">
-      <motion.h2
+      {/* Section Header */}
+      <motion.div
         initial={{ opacity: 0, x: -10 }}
         whileInView={{ opacity: 1, x: 0 }}
-        className="hud-text text-xl md:text-2xl mb-8 flex items-center gap-4 text-slate-300"
+        viewport={{ once: false, amount: 0.2 }}
+        className="mb-8"
       >
-        <span className="w-8 h-[1px] bg-sky-500" />
-        FREELANCE // OPEN_FOR_DEPLOYMENT
-      </motion.h2>
+        <h2 className="hud-text text-xl md:text-2xl flex items-center gap-4 text-slate-300">
+          <span className="w-8 h-[1px] bg-sky-500" />
+          FREELANCE_DISPATCH // PROJECT INQUIRY
+        </h2>
+      </motion.div>
 
+      {/* Main Freelance Container */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.15 }}
         transition={{ duration: 0.6 }}
-        className="glass p-8 md:p-12 border border-sky-500/20 bg-slate-950/20 backdrop-blur-md relative overflow-hidden group rounded-sm"
+        className="glass p-8 md:p-12 border border-sky-500/30 bg-slate-950/40 backdrop-blur-md relative overflow-hidden group rounded-sm shadow-[0_0_35px_rgba(56,189,248,0.1)]"
       >
-        {/* Subtle corner brackets */}
-        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-sky-500/60" />
-        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-sky-500/60" />
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-sky-500/60" />
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-sky-500/60" />
+        {/* Corner Accents */}
+        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-sky-400" />
+        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-sky-400" />
+        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-sky-400" />
+        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-sky-400" />
 
-        {/* Ambient background glow */}
-        <div className="absolute inset-0 bg-gradient-to-r from-sky-500/5 via-transparent to-amber-500/5 pointer-events-none" />
+        {/* Ambient Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-sky-500/10 via-transparent to-emerald-500/10 pointer-events-none" />
 
         <div className="relative z-10 space-y-8">
-          {/* Status Header */}
+          {/* Status Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
             <div className="flex items-center gap-3">
               <span className="relative flex h-3 w-3">
@@ -58,59 +64,73 @@ export default function Freelance() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
               </span>
               <span className="hud-text text-emerald-400 font-bold text-xs tracking-widest">
-                STATUS: AVAILABLE FOR NEW PROJECTS
+                STATUS: ACCEPTING NEW CLIENT PROJECTS
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-slate-400 text-xs font-mono">
+            <div className="flex items-center gap-2 text-slate-300 text-xs font-mono">
               <Zap size={14} className="text-amber-400" />
-              <span>RAPID DEPLOYMENT READY</span>
+              <span>RAPID FULL-STACK DEPLOYMENT</span>
             </div>
           </div>
 
-          {/* Intro Description */}
-          <div className="max-w-2xl space-y-2">
-            <h3 className="text-2xl md:text-3xl font-black text-white italic tracking-tight">
-              MISSION AVAILABLE // ACCEPTING NEW DEPLOYMENTS
+          {/* Headline & Subhead */}
+          <div className="space-y-3 max-w-2xl">
+            <h3 className="text-3xl md:text-5xl font-black text-white italic tracking-tight uppercase">
+              HAVE A PROJECT IN MIND?
             </h3>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed font-light">
-              Looking for custom full-stack applications, interactive 3D web experiences, or scalable web platforms?
-              I am available for freelance contracts, technical consulting, and client builds.
+            <p className="text-sky-300 text-lg md:text-xl font-semibold italic">
+              &quot;Let&apos;s build something that actually works.&quot;
+            </p>
+            <p className="text-slate-200 text-sm md:text-base font-light leading-relaxed pt-1">
+              Whether you need a custom web application, an online assessment platform, a high-converting business site, or full-stack engineering, I can help you build and launch it end-to-end.
             </p>
           </div>
 
-          {/* Services Grid */}
-          <div>
-            <span className="hud-text text-sky-400 text-[10px] block mb-4 tracking-widest">
-              CAPABILITIES & SERVICES
+          {/* Quick Capability List */}
+          <div className="space-y-3">
+            <span className="hud-text text-sky-400 text-[10px] block tracking-widest font-bold">
+              AVAILABLE CONTRACT SERVICES
             </span>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {services.map((service, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              {servicesList.map((item, idx) => (
                 <div
-                  key={index}
-                  className="flex items-center gap-3 p-3 bg-white/[0.02] border border-sky-500/10 hover:border-sky-500/30 transition-colors"
+                  key={idx}
+                  className="flex items-center gap-2.5 p-2.5 bg-slate-900/60 border border-sky-500/15 rounded-sm"
                 >
-                  <span className="text-sky-400 font-mono text-sm">→</span>
-                  <span className="text-xs md:text-sm font-mono text-slate-200">{service}</span>
+                  <CheckCircle2 size={14} className="text-sky-400 shrink-0" />
+                  <span className="text-xs font-mono text-slate-200">{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-white/10">
-            <div className="flex items-center gap-3 text-slate-400 text-xs font-mono">
+          {/* Dual CTAs & Direct Channels */}
+          <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-xs font-mono text-slate-300">
               <Terminal size={16} className="text-sky-400" />
-              <span>CONTRACT_TYPE: FREELANCE / CONSULTING</span>
+              <span>ESTIMATED TURNAROUND: FAST & TIMELY</span>
             </div>
 
-            <button
-              onClick={handleStartProject}
-              className="w-full sm:w-auto px-8 py-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-[0.2em] text-xs transition-all shadow-[0_0_20px_rgba(56,189,248,0.3)] hover:shadow-[0_0_30px_rgba(56,189,248,0.5)] flex items-center justify-center gap-3 group cursor-pointer"
-            >
-              <Send size={16} className="group-hover:translate-x-0.5 transition-transform" />
-              [ START A PROJECT ]
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <a
+                href={siteConfig.socials.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 py-4 border border-emerald-500/40 hover:border-emerald-400 bg-emerald-950/20 hover:bg-emerald-500/20 text-emerald-400 font-mono text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 rounded-sm cursor-pointer"
+              >
+                <MessageSquare size={16} />
+                <span>WHATSAPP DIRECT</span>
+              </a>
+
+              <button
+                onClick={handleStartProject}
+                className="w-full sm:w-auto px-8 py-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black uppercase tracking-[0.2em] text-xs transition-all shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_35px_rgba(56,189,248,0.6)] flex items-center justify-center gap-3 rounded-sm cursor-pointer group"
+              >
+                <Send size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                <span>START A PROJECT</span>
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>

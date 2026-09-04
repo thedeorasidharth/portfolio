@@ -11,12 +11,39 @@ interface EnvironmentProps {
   tier: DeviceTier;
 }
 
+const THEME_STORAGE_KEY = "portfolio_night_mode";
+
 export default function Environment({ tier }: EnvironmentProps) {
   const cloudsRef = useRef<THREE.Group>(null!);
-  const [nightMode, setNightMode] = useState(false);
+
+  // Lazy initializer: defaults to true (Dark Theme) when no preference is saved in localStorage
+  const [nightMode, setNightMode] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY);
+        if (saved !== null) {
+          return saved === "true";
+        }
+      } catch {
+        // LocalStorage fallback
+      }
+    }
+    return true;
+  });
 
   useEffect(() => {
-    const handleNight = () => setNightMode((prev) => !prev);
+    const handleNight = () => {
+      setNightMode((prev) => {
+        const next = !prev;
+        try {
+          localStorage.setItem(THEME_STORAGE_KEY, String(next));
+        } catch {
+          // LocalStorage fallback
+        }
+        return next;
+      });
+    };
+
     window.addEventListener("toggle-night", handleNight);
     return () => window.removeEventListener("toggle-night", handleNight);
   }, []);
@@ -36,7 +63,7 @@ export default function Environment({ tier }: EnvironmentProps) {
 
   return (
     <>
-      {/* Dark Cinematic Sunset Sky: rich dark navy upper sky with warm sunset horizon glow */}
+      {/* Dark Cinematic Sky */}
       <Sky
         distance={450000}
         sunPosition={nightMode ? [0, -1, 0] : [80, 1.2, -100]}
@@ -57,7 +84,7 @@ export default function Environment({ tier }: EnvironmentProps) {
         speed={0.6}
       />
 
-      {/* Volumetric Evening Clouds */}
+      {/* Volumetric Clouds */}
       {tier !== "low" && (
         <group ref={cloudsRef}>
           <Clouds material={THREE.MeshLambertMaterial} limit={400}>
@@ -83,7 +110,7 @@ export default function Environment({ tier }: EnvironmentProps) {
         </group>
       )}
 
-      {/* Twilight Navy Fog */}
+      {/* Twilight / Pitch Black Deep Night Fog */}
       <fog attach="fog" args={[nightMode ? "#000000" : "#12172e", 15, 110]} />
     </>
   );

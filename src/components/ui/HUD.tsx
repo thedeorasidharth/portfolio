@@ -38,9 +38,9 @@ export default function HUD() {
           Desktop only — mobile par hide
       ====================================================== */}
 
-      <div className="hidden sm:block absolute top-8 left-8 w-24 h-24 border-t-2 border-l-2 border-sky-500/40" />
+      <div className="hidden sm:block absolute top-20 left-8 w-20 h-20 border-t-2 border-l-2 border-sky-500/30" />
 
-      <div className="hidden sm:block absolute top-8 right-8 w-24 h-24 border-t-2 border-r-2 border-sky-500/40" />
+      <div className="hidden sm:block absolute top-20 right-8 w-20 h-20 border-t-2 border-r-2 border-sky-500/30" />
 
       <div className="hidden sm:block absolute bottom-8 left-8 w-24 h-24 border-b-2 border-l-2 border-sky-500/40" />
 
